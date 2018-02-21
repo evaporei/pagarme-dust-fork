@@ -2,6 +2,8 @@ use std::io::Bytes;
 use std::io::prelude::*;
 use std::fs::File;
 
+mod instruction_set;
+
 struct Parser {
     offset: u8,
     bytes: Bytes<File>,

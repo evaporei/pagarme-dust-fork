@@ -32,19 +32,4 @@ impl Iterator for Parser {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        assert_eq!(4, 2 + 2);
-    }
-
-    #[test]
-    fn test_next() {
-        let file = File::open("binary_files/file1.dat").unwrap();
-        let mut parser = Parser::new(file);
-
-        assert_eq!(parser.next(), Some(0x61));
-    }
-}
+mod tests;

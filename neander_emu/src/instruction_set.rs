@@ -2,7 +2,7 @@ trait Instruction {
     fn operand(&self) -> Option<u8>;
 }
 
-enum OpCode {
+pub enum OpCode {
     NOP,
     STA(u8),
     LDA(u8),

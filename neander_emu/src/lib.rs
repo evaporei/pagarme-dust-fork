@@ -45,23 +45,24 @@ impl Parser {
             bytes,
         }
     }
-    fn byte_to_opcode(&mut self, byte: u8) -> Result<OpCode, ParserError> {
-        let opcode = (byte & 0xf0) >> 4;
+    fn byte_to_opcode(&mut self) -> Result<OpCode, ParserError> {
+        let byte = self.next().unwrap();
+        let opcode = byte & 0xf0;
 
         match opcode {
             0x00 => Ok(OpCode::NOP),
-            0x06 => Ok(OpCode::NOT),
-            0x0f => Ok(OpCode::HLT),
+            0x60 => Ok(OpCode::NOT),
+            0xf0 => Ok(OpCode::HLT),
             _ => match self.next() {
                 Some(operand) => match opcode {
-                    0x01 => Ok(OpCode::STA(operand)),
-                    0x02 => Ok(OpCode::LDA(operand)),
-                    0x03 => Ok(OpCode::ADD(operand)),
-                    0x04 => Ok(OpCode::OR(operand)),
-                    0x05 => Ok(OpCode::AND(operand)),
-                    0x08 => Ok(OpCode::JMP(operand)),
-                    0x09 => Ok(OpCode::JN(operand)),
-                    0x0a => Ok(OpCode::JZ(operand)),
+                    0x10 => Ok(OpCode::STA(operand)),
+                    0x20 => Ok(OpCode::LDA(operand)),
+                    0x30 => Ok(OpCode::ADD(operand)),
+                    0x40 => Ok(OpCode::OR(operand)),
+                    0x50 => Ok(OpCode::AND(operand)),
+                    0x80 => Ok(OpCode::JMP(operand)),
+                    0x90 => Ok(OpCode::JN(operand)),
+                    0xa0 => Ok(OpCode::JZ(operand)),
                     _ => Err(ParserError::InvalidOpCode(opcode)),
                 },
                 None => Err(ParserError::MissingOperand(opcode)),
